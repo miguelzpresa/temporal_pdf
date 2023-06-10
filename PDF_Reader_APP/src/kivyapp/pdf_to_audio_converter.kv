@@ -1,0 +1,51 @@
+#:kivy 2.0.0
+#:import MDFileManager kivymd.uix.filemanager.MDFileManager
+#:import MDIconButton kivymd.uix.button.MDIconButton
+#:import MDLabel kivymd.uix.label.MDLabel
+#:import MDTextField kivymd.uix.textfield.MDTextField
+#:import MDToolbar kivymd.uix.toolbar.MDToolbar
+
+BoxLayout:
+    orientation: 'vertical'
+    padding: dp(16)
+
+    toolbar:
+        title: 'PDF to Audio Converter'
+        left_action_items: [['menu', lambda x: app.open_file_manager()]]
+        elevation: 10
+
+    MDLabel:
+        id: input_text
+        text: ''
+        halign: 'center'
+        size_hint_y: None
+        height: self.texture_size[1] + dp(16)
+
+    BoxLayout:
+        size_hint_y: None
+        height: dp(48)
+        padding: dp(8)
+
+        MDTextField:
+            id: language_dropdown
+            hint_text: 'Select Language'
+            mode: 'dropdown'
+            on_text: app.root.ids.progress_circle.value = 0
+
+    BoxLayout:
+        orientation: 'vertical'
+        padding: dp(16)
+
+        MDProgressCircular:
+            id: progress_circle
+            value: 0
+            size_hint: None, None
+            size: dp(200), dp(200)
+
+        MDLabel:
+            id: output_text
+            text: ''
+            halign: 'center'
+            size_hint_y: None
+            height: self.texture_size[1] + dp(16)
+

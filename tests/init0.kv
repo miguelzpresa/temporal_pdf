@@ -1,0 +1,35 @@
+<LoginScreen>:
+    orientation: 'vertical'
+    spacing: 10
+    padding: 20
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: '48dp'
+
+        Label:
+            text: 'Username:'
+            size_hint_x: 0.3
+
+        TextInput:
+            id: username_input
+
+    BoxLayout:
+        orientation: 'horizontal'
+        size_hint_y: None
+        height: '48dp'
+
+        Label:
+            text: 'Password:'
+            size_hint_x: 0.3
+
+        TextInput:
+            id: password_input
+            password: True
+
+    Button:
+        text: 'Log In'
+        size_hint: 0.5, None
+        height: '48dp'
+
