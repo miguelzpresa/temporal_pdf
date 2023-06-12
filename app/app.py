@@ -29,15 +29,10 @@ def convertir_a_audio():
         
             # Obtener el idioma seleccionado
             language = idiomas_codigos[combo_idiomas.get()]
+            audio = gtts.gTTS(text=text, lang=language, slow=slow_audio_speed)
             #print(idiomas_codigos)
             #print(type(language))
 
-            # Crear objeto de conversión de texto a voz
-            audio = gtts.gTTS(text=text, lang=language, slow=slow_audio_speed)
-            time.sleep(10)
-            audio_info = pygame.mixer.Sound(audio_path)
-            duration = audio_info.get_length()
-            #print(audio)
             
             # Guardar archivo de audio
             print('si')
@@ -45,6 +40,12 @@ def convertir_a_audio():
             audio.save(audio_path)
             print('n')
 
+            # Crear objeto de conversión de texto a voz
+            time.sleep(10)
+            pygame.mixer.init()
+            audio_info = pygame.mixer.Sound(audio_path)
+            duration = audio_info.get_length()
+            #print(audio)
             # Reproducir archivo de audio con pygame
             #pygame.init()
             #pygame.mixer.init()
@@ -60,9 +61,9 @@ def convertir_a_audio():
             # Obtener la duración del archivo de audio
 
             # Iniciar la barra de progreso
-            progress_bar.config(maximum=duration)
-            actualizar_barra_progreso()
-            print('listo')
+            #progress_bar.config(maximum=duration)
+            #actualizar_barra_progreso()
+            #print('listo')
 
             messagebox.showinfo("Éxito", "La conversión se ha completado correctamente.")
         except Exception as e:
@@ -145,7 +146,7 @@ def funcion():
         canvas = tk.Canvas(ventana_secundaria, width=ventana_secundaria.winfo_screenwidth(), height=ventana_secundaria.winfo_screenheight(),highlightthickness=0)
         canvas.pack()
 
-        background_image = Image.open('/home/sistemas/projects/temporal_pdf/app/images/v6.jpg')
+        background_image = Image.open('v1.jpg')
         background_image = background_image.resize((ventana_secundaria.winfo_screenwidth(), ventana_secundaria.winfo_screenheight()))
         background = ImageTk.PhotoImage(background_image)
 
@@ -153,27 +154,27 @@ def funcion():
 
     
          #Cargar las imágenes de los botones "Pausar" y "Reanudar"
-        pausar_image = ImageTk.PhotoImage(file="/home/sistemas/projects/temporal_pdf/app/images/pause.jpeg")
-        reanudar_image = ImageTk.PhotoImage(file="/home/sistemas/projects/temporal_pdf/app/images/r.png")
-        play_image = ImageTk.PhotoImage(file="/home/sistemas/projects/temporal_pdf/app/images/play.jpeg")
-        home_image = ImageTk.PhotoImage(file="/home/sistemas/projects/temporal_pdf/app/images/home.jpeg")
-
+        pausar_image = ImageTk.PhotoImage(file= "pause.jpeg")
+        reanudar_image = ImageTk.PhotoImage(file="return.jpeg")
+        play_image = ImageTk.PhotoImage(file="play.jpeg")
+        home_image = ImageTk.PhotoImage(file="home.jpeg")
+        ver_images = ImageTk.PhotoImage(file= "ver1.jpeg")
 	
 
-        btn_reproducir = tk.Button(ventana_secundaria,image=play_image,state=tk.NORMAL ,command=iniciar_reproduccion, bd=1)
-        btn_reproducir.place(x=300, y=0)
+        btn_reproducir = tk.Button(ventana_secundaria,image=play_image,state=tk.NORMAL ,command=iniciar_reproduccion, bd=4)
+        btn_reproducir.place(x=500, y=10)
 
-        btn_pause = tk.Button(ventana_secundaria,image=pausar_image,state=tk.NORMAL ,command=pausar_reproduccion,bd=2)
-        btn_pause.place(x=350, y=0)
+        btn_pause = tk.Button(ventana_secundaria,image=pausar_image,state=tk.NORMAL ,command=pausar_reproduccion,bd=4)
+        btn_pause.place(x=400, y=10)
 
-        btn_resume = tk.Button(ventana_secundaria, image=reanudar_image,state=tk.DISABLED ,command=reanudar_reproduccion,bd=3)
-        btn_resume.place(x=400, y=0)
+        btn_resume = tk.Button(ventana_secundaria, image=reanudar_image,state=tk.DISABLED ,command=reanudar_reproduccion,bd=4)
+        btn_resume.place(x=600, y=10)
 
-        btn_viewer = tk.Button(ventana_secundaria,text='view',state=tk.NORMAL, command=visualizador_pdf,bd=4)
-        btn_viewer.place(x=800, y=0)
+        btn_viewer = tk.Button(ventana_secundaria,image=ver_images,state=tk.NORMAL, command=visualizador_pdf,bd=4)
+        btn_viewer.place(x=500, y=100)
 
-        btn_destroy = tk.Button(ventana_secundaria,text='go back',image=home_image,state =tk.NORMAL ,command=lambda:[destroy(),ventana_secundaria.destroy()])
-        btn_destroy.place(x=600, y=0)
+        btn_destroy = tk.Button(ventana_secundaria,image=home_image,state =tk.NORMAL ,command=lambda:[destroy(),ventana_secundaria.destroy()])
+        btn_destroy.place(x=800, y=10)
 
         btn_reproducir.config(state=tk.NORMAL)
         btn_pause.config(state=tk.NORMAL)
@@ -202,7 +203,7 @@ window.configure(bg='white')
 #Subir imagen de logo
 print("aaaa")
 
-image = Image.open('/home/sistemas/projects/temporal_pdf/app/images/logo.jpeg')
+image = Image.open('logo.jpeg')
 logo_image_path = ImageTk.PhotoImage(image)
 #logo_image = ImageTk.PhotoImage(file='images/logo.jpeg') 
 #image = Image.open('images/logo.jpeg')
@@ -218,19 +219,19 @@ combo_idiomas.current(0)  # Establecer el idioma predeterminado
 combo_idiomas.pack(pady=10)
 
 #Cargar la imagen del botón "Subir PDF"
-subir_pdf_image = ImageTk.PhotoImage(file="/home/sistemas/projects/temporal_pdf/app/images/subir_pdf.jpeg")
+subir_pdf_image = ImageTk.PhotoImage(file="subir_pdf.jpeg")
 
 # Agregar un botón para seleccionar el archivo PDF y realizar la conversión
 btn_convertir = tk.Button(window,image=subir_pdf_image ,text="Seleccionar PDF", command=lambda:[convertir_a_audio(),funcion()])#convertir_a_audio()
 btn_convertir.pack(pady=10)
 #Agregar una barra de progreso para mostrar el avance de la reproducción
-progress_bar = ttk.Progressbar(window, orient='horizontal', mode='determinate')
-progress_bar.pack(pady=10)
+#progress_bar = ttk.Progressbar(window, orient='horizontal', mode='determinate')
+#progress_bar.pack(pady=10)
 
 canvas = tk.Canvas(window, width=window.winfo_screenwidth(), height=window.winfo_screenheight(),highlightthickness=0)
 canvas.pack()
 
-background_image = Image.open('/home/sistemas/projects/temporal_pdf/app/images/v11.jpg')
+background_image = Image.open('v11.jpg')
 background_image = background_image.resize((window.winfo_screenwidth(), window.winfo_screenheight()))
 background = ImageTk.PhotoImage(background_image)
 
